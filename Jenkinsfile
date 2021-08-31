@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage ('Docker Build'){
+        stages ('Docker Build'){
             steps {
                 parallel {
                     stage("Build Book Application"){
@@ -93,7 +93,7 @@ pipeline {
                 }
             }
         }
-        stage ("Docker Push") {
+        stages ("Docker Push") {
             steps {
                 parallel {
                     stage("Push Library Application"){
