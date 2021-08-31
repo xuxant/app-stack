@@ -144,7 +144,7 @@ pipeline {
                                     export IMAGE_TAG=${env.BUILD_NUMBER}
                                     export DOMAIN_NAME=$LB_DOMAIN_NAME
                                     kubectl apply -f namespace.yaml
-                                    envsubst < ./gateway.yaml | kubectl apply -f
+                                    envsubst < ./gateway.yaml | kubectl apply -f -
                                     envsubst < ./deployment.yaml | kubectl apply -f -
                                     envsubst < ./service.yaml | kubectl apply -f -
                                     """)
