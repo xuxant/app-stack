@@ -63,69 +63,65 @@ pipeline {
                 }
             }
         }
-
-    }
-
-    stage ('Docker Build'){
-        steps {
-            parallel {
-                stage("Build Book Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
+        stage ('Docker Build'){
+            steps {
+                parallel {
+                    stage("Build Book Application"){
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
                         }
                         
-                    }
-                }
-                stage("Build User Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
                         }
-                        
                     }
-                }
-                stage("Build Library Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
-                        }
-                        
-                    }
-                }
-            }
-        }
-    }
+                    stage("Build User Application"){
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            }
 
-    stage ("Docker Push") {
-        steps {
-            parallel {
-                stage("Push Library Application"){
-                    script {
-                        docker.withRegistry("https://" + "${LIBRARY_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_library.push()
                         }
                     }
-                }
-                stage("Push Book Application"){
-                    script {
-                        docker.withRegistry("https://" + "${BOOK_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_books.push()
-                        }
-                    }
-                }
-                stage("Push User Application"){
-                    script {
-                        docker.withRegistry("https://" + "${USER_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_user.push()
+                    stage("Build Library Application"){
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            }
+
                         }
                     }
                 }
             }
         }
-    }
+        stage ("Docker Push") {
+            steps {
+                parallel {
+                    stage("Push Library Application"){
+                        script {
+                            docker.withRegistry("https://" + "${LIBRARY_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_library.push()
+                            }
+                        }
+                    }
+                    stage("Push Book Application"){
+                        script {
+                            docker.withRegistry("https://" + "${BOOK_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_books.push()
+                            }
+                        }
+                    }
+                    stage("Push User Application"){
+                        script {
+                            docker.withRegistry("https://" + "${USER_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_user.push()
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-    stage('Deploy Image to Kubernetes'){
+        stage('Deploy Image to Kubernetes'){
             steps {
                 script{
                     wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']){
@@ -134,7 +130,6 @@ pipeline {
                                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
                                 credentialsId: 'AWS-Access',
-
                             ]]) {
                                 dir("k8s"){
                                     sh("""
@@ -150,12 +145,9 @@ pipeline {
                                     """)
                                 }
                             }
-                        }
+                    }
                 }
             }
-        }
-
-        
+        } 
     }
-
 }
