@@ -66,24 +66,29 @@ pipeline {
         stage ('Docker Build'){
             parallel {
                 stage("Build Book Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
-                    }
-                    
+                    steps {
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            }
+                        }
                     }
                 }
                 stage("Build User Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                    steps {
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            }
                         }
                     }
                 }
                 stage("Build Library Application"){
-                    script {
-                        dir("application-one") {
-                            dockerImage_books =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                    steps {
+                        script {
+                            dir("application-one") {
+                                dockerImage_books =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            }
                         }
                     }
                 }
@@ -92,23 +97,29 @@ pipeline {
         stage ("Docker Push") {
             parallel {
                 stage("Push Library Application"){
-                    script {
-                        docker.withRegistry("https://" + "${LIBRARY_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_library.push()
+                    steps {
+                        script {
+                            docker.withRegistry("https://" + "${LIBRARY_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_library.push()
+                            }
                         }
                     }
                 }
                 stage("Push Book Application"){
-                    script {
-                        docker.withRegistry("https://" + "${BOOK_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_books.push()
+                    steps {
+                        script {
+                            docker.withRegistry("https://" + "${BOOK_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_books.push()
+                            }
                         }
                     }
                 }
                 stage("Push User Application"){
-                    script {
-                        docker.withRegistry("https://" + "${USER_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                            dockerImage_user.push()
+                    steps {
+                        script {
+                            docker.withRegistry("https://" + "${USER_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
+                                dockerImage_user.push()
+                            }
                         }
                     }
                 }
