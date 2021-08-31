@@ -5,7 +5,7 @@ const request = require('request')
 
 const router = new express.Router()
 
-booksURL = process.env.BOOKSURL
+booksURL = process.env.BOOKSURL || "http://books:7000/books"
 // const bookURL = "http://localhost:7000/books"
 
 const items = [{
@@ -44,7 +44,7 @@ router.get("/library", async(req, res) => {
     })
 })
 
-router.get("/library/:id/books", async(req, res) => {
+router.get("/library/:id/book", async(req, res) => {
     if(bookURL==undefined){
         res.status(500).json({
             "success": false,
