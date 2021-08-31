@@ -10,7 +10,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: product
+    app: books
   ports:
     - name: tcp
       port: 5000
@@ -27,11 +27,11 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: product
+    app: users
   ports:
     - name: tcp
       port: 5000
-      targetPort: 5000
+      targetPort: 7000
 ---
 kind: Service
 apiVersion: v1
@@ -44,7 +44,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: product
+    app: library
   ports:
     - name: tcp
       port: 5000

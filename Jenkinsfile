@@ -69,7 +69,7 @@ pipeline {
                     steps {
                         script {
                             dir("application-one") {
-                                dockerImage_users =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                                dockerImage_users =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
@@ -78,7 +78,7 @@ pipeline {
                     steps {
                         script {
                             dir("application-two") {
-                                dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                                dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
