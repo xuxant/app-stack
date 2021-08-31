@@ -31,7 +31,7 @@ spec:
   ports:
     - name: tcp
       port: 5000
-      targetPort: 7000
+      targetPort: 5000
 ---
 kind: Service
 apiVersion: v1
