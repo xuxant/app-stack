@@ -78,7 +78,7 @@ pipeline {
                     steps {
                         script {
                             dir("application-one") {
-                                dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                                dockerImage_users =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
@@ -87,7 +87,7 @@ pipeline {
                     steps {
                         script {
                             dir("application-one") {
-                                dockerImage_books =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                                dockerImage_library =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
