@@ -69,7 +69,7 @@ pipeline {
                     steps {
                         script {
                             dir("application-one") {
-                                dockerImage_books =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                                dockerImage_users =  docker.build("${BOOK_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
@@ -77,8 +77,8 @@ pipeline {
                 stage("Build User Application"){
                     steps {
                         script {
-                            dir("application-one") {
-                                dockerImage_users =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
+                            dir("application-two") {
+                                dockerImage_books =  docker.build("${USER_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
                     }
@@ -86,7 +86,7 @@ pipeline {
                 stage("Build Library Application"){
                     steps {
                         script {
-                            dir("application-one") {
+                            dir("application-three") {
                                 dockerImage_library =  docker.build("${LIBRARY_REGISTRY}" + ":${env.BUILD_NUMBER}")
                             }
                         }
@@ -118,7 +118,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry("https://" + "${USER_REGISTRY}", "ecr:us-east-1:" + "${REGISTRY_CREDENTIALS}") {
-                                dockerImage_user.push()
+                                dockerImage_users.push()
                             }
                         }
                     }
