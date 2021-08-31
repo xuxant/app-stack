@@ -1,0 +1,8 @@
+.header {
+    color: red;
+    margin: 0 auto;
+    background-color: black;
+    display: grid;
+    width: auto;
+    padding: 20px;
+}

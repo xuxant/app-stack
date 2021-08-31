@@ -1,0 +1,102 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: books
+  namespace: demo
+  labels:
+    app: books
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: books
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: books
+        version: v1
+    spec:
+      containers:
+        - name: books
+          image: ${BOOK_REGISTRY}:${IMAGE_TAG}
+          ports:
+            - name: application
+              containerPort: 7000
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: users
+  namespace: demo
+  labels:
+    app: users
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: users
+        version: v1
+    spec:
+      containers:
+        - name: users
+          image: ${USER_REGISTRY}:${IMAGE_TAG}
+          ports:
+            - name: application
+              containerPort: 5000
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: library
+  namespace: demo
+  labels:
+    app: library
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: library
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: library
+        version: v1
+    spec:
+      containers:
+        - name: library
+          image: ${LIBRARY_REGISTRY}:${IMAGE_TAG}
+          ports:
+            - name: application
+              containerPort: 8000
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
