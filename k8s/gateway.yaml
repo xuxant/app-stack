@@ -29,7 +29,7 @@ spec:
   http:
   - match:
       - uri:
-          prefix: "/books"
+          exact: "/books"
  
     route:
       - destination:
@@ -39,7 +39,7 @@ spec:
 
   - match:
       - uri:
-          prefix: "/users"
+          regex: "/users"
     route:
       - destination:
           host: users
@@ -48,7 +48,7 @@ spec:
 
   - match:
       - uri:
-          prefix: "/library"
+          exact: "/library"
     route:
       - destination:
           host: library

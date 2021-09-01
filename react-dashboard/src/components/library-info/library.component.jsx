@@ -26,7 +26,7 @@ const LibraryInfo = ({placeholder, API_ENDPOINT}) => {
             <div>
                 {
                     data.map(library => (
-                        <Books key={library.id} placeholder={library.name} API_ENDPOINT={API_ENDPOINT + '/' + library.id + '/books'} />
+                        <Books key={library.id} placeholder={library.name} API_ENDPOINT={API_ENDPOINT + '/' + library.id + '/book'} />
                     ))
                 }
             </div>

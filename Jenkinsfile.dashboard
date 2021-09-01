@@ -17,7 +17,7 @@ pipeline {
     }
 
     stages {
-            stage('Checkout & Environment Prep'){
+        stage('Checkout & Environment Prep'){
             steps{
                 script {
                     wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']){
@@ -49,11 +49,15 @@ pipeline {
         }
 
         stage('Build Image'){
-
             steps{
 
                 script {
                     dir("react-dashboard"){
+                        sh("""
+                            echo "REACT_APP_BOOKURL=${REACT_APP_BOOKURL}" > .env
+                            echo "REACT_APP_UserURL=${REACT_APP_UserURL}" >> .env
+                            echo "REACT_APP_LibraryURL=${REACT_APP_LibraryURL}" >> .env
+                        """)
                         dockerImage = docker.build("${REGISTRY}" + ":${env.BUILD_NUMBER}")
                     }
                 }
@@ -81,21 +85,18 @@ pipeline {
                                 credentialsId: 'AWS-Access',
 
                             ]]) {
-                            dir("k8s/deployment"){
-                                sh("""
-                                export REGISTRY=$REGISTRY
-                                export IMAGE_TAG=${env.BUILD_NUMBER}
-                                envsubst < ./dashboard.yaml | kubectl apply -f -
-                                """)
+                                dir("k8s/deployment"){
+                                    sh("""
+                                    export REGISTRY=$REGISTRY
+                                    export IMAGE_TAG=${env.BUILD_NUMBER}
+                                    envsubst < ./dashboard.yaml | kubectl apply -f -
+                                    """)
+                                }
                             }
                         }
+                    }
                 }
             }
         }
-
-        
     }
-
-    }
-
 }
