@@ -12,7 +12,8 @@ spec:
   selector:
     app: books
   ports:
-    - name: tcp
+    - name: http
+      protocol: TCP
       port: 5000
       targetPort: 7000
 ---
@@ -29,7 +30,8 @@ spec:
   selector:
     app: users
   ports:
-    - name: tcp
+    - name: http
+      protocol: TCP
       port: 5000
       targetPort: 5000
 ---
@@ -46,6 +48,7 @@ spec:
   selector:
     app: library
   ports:
-    - name: tcp
+    - name: http
+      protocol: TCP
       port: 5000
       targetPort: 8000
