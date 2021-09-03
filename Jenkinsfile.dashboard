@@ -50,7 +50,6 @@ pipeline {
 
         stage('Build Image'){
             steps{
-
                 script {
                     dir("react-dashboard"){
                         sh("""
@@ -85,13 +84,12 @@ pipeline {
                                 credentialsId: 'AWS-Access',
 
                             ]]) {
-                                dir("k8s/deployment"){
-                                    sh("""
-                                    export REGISTRY=$REGISTRY
-                                    export IMAGE_TAG=${env.BUILD_NUMBER}
-                                    envsubst < ./dashboard.yaml | kubectl apply -f -
-                                    """)
-                                }
+                            dir("k8s/deployment"){
+                                sh("""
+                                export REGISTRY=$REGISTRY
+                                export IMAGE_TAG=${env.BUILD_NUMBER}
+                                envsubst < ./dashboard.yaml | kubectl apply -f -
+                                """)
                             }
                         }
                     }
