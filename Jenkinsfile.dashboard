@@ -5,7 +5,7 @@ pipeline {
         dockerImage = ''
         REGISTRY = '737971166371.dkr.ecr.us-east-1.amazonaws.com/dashboard'
         AWS_REGION = 'us-east-1'
-        AWS_PROFILE = 'sohail'
+        PROFILE = 'sohail'
         REGISTRY_CREDENTIALS = 'AWS-Access'
     }
 
