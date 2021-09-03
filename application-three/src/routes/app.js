@@ -45,14 +45,15 @@ router.get("/library", async(req, res) => {
 })
 
 router.get("/library/:id/book", async(req, res) => {
-    if(bookURL==undefined){
+    console.log(booksURL)
+    if(booksURL==undefined){
         res.status(500).json({
             "success": false,
             "message": "Something went wrong. Please try again."
         })
     }else {
-        console.log(bookURL)
-        books = request({method: 'GET', uri: bookURL, json: true}, (error, response, body) => {
+        console.log(booksURL)
+        books = request({method: 'GET', uri: booksURL, json: true}, (error, response, body) => {
             if (error){
                 res.status(400).json({
                     "success": false,
