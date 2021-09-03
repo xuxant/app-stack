@@ -103,7 +103,7 @@ pipeline {
                                 credentialsId: 'AWS-Access',
 
                             ]]) {
-                            dir("k8s/deployment"){
+                            dir("k8s"){
                                 sh("""
                                 export REGISTRY=$REGISTRY
                                 export IMAGE_TAG=${env.BUILD_NUMBER}
