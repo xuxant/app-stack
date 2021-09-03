@@ -16,7 +16,26 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    parameters {
+        string (name: 'REACT_APP_BOOKURL', defaultValue: 'https://g2o74rl7vh.execute-api.us-east-1.amazonaws.com', description: "API For Books.")
+
+        string (name: 'REACT_APP_UserURL', defaultValue: 'https://9hu46duihc.execute-api.us-east-1.amazonaws.com', description: "API For Books.")
+
+        string (name: 'REACT_APP_LibraryURL', defaultValue: 'https://3ehsqglai9.execute-api.us-east-1.amazonaws.com', description: "API For Books.")
+    }
+
     stages {
+       stage('Set Environment Variable'){
+            steps {
+                script {
+                    env.REACT_APP_BOOKURL = "${params.REACT_APP_BOOKURL}"
+                    env.REACT_APP_UserURL = "${params.REACT_APP_UserURL}"
+                    env.REACT_APP_LibraryURL = "${params.REACT_APP_LibraryURL}"
+
+                }
+            }
+        }
+
         stage('Checkout & Environment Prep'){
             steps{
                 script {
