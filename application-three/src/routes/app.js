@@ -5,7 +5,7 @@ const request = require('request')
 
 const router = new express.Router()
 
-booksURL = process.env.BOOKSURL || "http://books:7000/books"
+booksURL = process.env.BOOKSURL || "http://books:5000/books"
 // const bookURL = "http://localhost:7000/books"
 
 const items = [{
